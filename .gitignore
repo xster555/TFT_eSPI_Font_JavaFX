@@ -1,3 +1,6 @@
 ### IntelliJ IDEA ###
 target/
 .idea/
+.idea/misc.xml
+.idea/misc.xml
+.idea/jarRepositories.xml

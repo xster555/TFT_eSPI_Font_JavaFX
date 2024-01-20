@@ -6,12 +6,17 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 
+import javafx.embed.swing.JFXPanel;
+import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -20,6 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,14 +45,19 @@ public class PrimaryController  {
   @FXML private Label fontsNum;
   @FXML private Spinner<Integer> fontSizeSpinner;
   @FXML private TextField charToExport, outputFileName;
+  @FXML private VBox previewContainer;
 
   List<String> fontList = new ArrayList<>();
+  Font[] allFonts;
+
 
   /**
    * 初始化方法，当前fxml控件完成加载后调用
    */
   @FXML
   public void initialize() {
+    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    allFonts = ge.getAllFonts();
     _setupListView();
     _setupFontSizeSpinner();
   }
@@ -65,14 +77,11 @@ public class PrimaryController  {
   private void _setupListView() {
     FontCreator fontCreator = new FontCreator();
     String[] fontArr = fontCreator.getFontList();
-    List<String> processingFontList = Arrays.asList(fontArr);
-    fontList = Font.getFamilies();
+    fontList = Arrays.asList(fontArr);
 
-    List<String> avalableFontList = fontList.stream().filter(processingFontList::contains).toList();
+    fontsNum.setText("(" + fontList.size() + ")");
 
-    fontsNum.setText("(" + avalableFontList.size() + ")");
-
-    fontListView.setItems(FXCollections.observableList(avalableFontList));
+    fontListView.setItems(FXCollections.observableList(fontList));
 
     fontListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
       if(newValue == null) return;
@@ -82,8 +91,18 @@ public class PrimaryController  {
   }
 
   private void _updatePreviewWindow() {
-    previewWindow.setText("ABCDEFGHIJKLMNOPQRSTUVWXYZ\n\nabcdefghijklmnopqrstuvwxyz\n\n0123456789");
-    previewWindow.setFont(Font.font(fontListView.getSelectionModel().getSelectedItem(), fontSizeSpinner.getValue()));
+    previewContainer.getChildren().clear();
+
+    SwingNode swingNode = new SwingNode();
+    JTextArea jTextArea = new JTextArea("\n  ABCDEFGHIJKLMNOPQRSTUVWXYZ\n\n  abcdefghijklmnopqrstuvwxyz\n\n  0123456789");
+
+    Font font = allFonts[fontListView.getSelectionModel().getSelectedIndex()];
+    Font font1 = font.deriveFont(fontSizeSpinner.getValue().floatValue());
+
+    jTextArea.setFont(font1);
+
+    swingNode.setContent(jTextArea);
+    previewContainer.getChildren().add(swingNode);
   }
 
   @FXML

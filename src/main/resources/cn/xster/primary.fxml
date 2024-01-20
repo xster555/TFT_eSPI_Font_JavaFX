@@ -54,7 +54,8 @@
                         <Label text=".h" />
                      </children>
                   </HBox>
-                  <TextArea fx:id="previewWindow" style="-fx-background-color: white;" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <VBox fx:id="previewContainer" style="-fx-background-color: white;" VBox.vgrow="ALWAYS" >
+                  </VBox>
                </children>
                <padding>
                   <Insets top="25.0" />
