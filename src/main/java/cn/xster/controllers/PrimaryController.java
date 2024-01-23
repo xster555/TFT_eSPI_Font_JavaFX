@@ -49,7 +49,8 @@ public class PrimaryController  {
 
   List<String> fontList = new ArrayList<>();
   Font[] allFonts;
-
+  String textToDisplay = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789\n.~!@#$%^&*()_+{}|:\"<>?";
+  JTextArea jTextArea = null;
 
   /**
    * 初始化方法，当前fxml控件完成加载后调用
@@ -60,6 +61,7 @@ public class PrimaryController  {
     allFonts = ge.getAllFonts();
     _setupListView();
     _setupFontSizeSpinner();
+    _setupTextArea();
   }
 
   public void _setupFontSizeSpinner() {
@@ -71,7 +73,6 @@ public class PrimaryController  {
 
       _updatePreviewWindow();
     });
-
   }
 
   private void _setupListView() {
@@ -90,19 +91,30 @@ public class PrimaryController  {
     });
   }
 
-  private void _updatePreviewWindow() {
-    previewContainer.getChildren().clear();
-
+  private void _setupTextArea() {
     SwingNode swingNode = new SwingNode();
-    JTextArea jTextArea = new JTextArea("\n  ABCDEFGHIJKLMNOPQRSTUVWXYZ\n\n  abcdefghijklmnopqrstuvwxyz\n\n  0123456789");
+    jTextArea = new JTextArea();
+    jTextArea.setBounds(0,0,250, 500);
+    jTextArea.setRows(100);
+
+    jTextArea.setLineWrap(true);
+    jTextArea.setWrapStyleWord(true);
+
+    swingNode.setContent(jTextArea);
+    previewContainer.getChildren().add(swingNode);
+  }
+
+  private void _updatePreviewWindow() {
+    textToDisplay = StringUtils.isBlank(jTextArea.getText())
+        ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789\n.~!@#$%^&*()_+{}|:\"<>?"
+        : jTextArea.getText().trim();
+    jTextArea.setText(textToDisplay);
 
     Font font = allFonts[fontListView.getSelectionModel().getSelectedIndex()];
     Font font1 = font.deriveFont(fontSizeSpinner.getValue().floatValue());
 
     jTextArea.setFont(font1);
-
-    swingNode.setContent(jTextArea);
-    previewContainer.getChildren().add(swingNode);
+    jTextArea.setText(textToDisplay);
   }
 
   @FXML
@@ -117,7 +129,7 @@ public class PrimaryController  {
       int[] a = {};
       fontCreator.getHFont(fontListView.getSelectionModel().getSelectedIndex(),
           fontSizeSpinner.getValue(),
-          StringUtils.isBlank(charToExport.getText()) ? "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789": charToExport.getText(),
+          StringUtils.isBlank(charToExport.getText()) ? "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.~!@#$%^&*()_+{}|:\"<>?": charToExport.getText(),
           a,
           StringUtils.isBlank(outputFileName.getText()) ? file.getAbsolutePath() + "\\output" : file.getAbsolutePath() + "\\" + outputFileName.getText());
     }
