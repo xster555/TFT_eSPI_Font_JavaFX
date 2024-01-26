@@ -46,6 +46,7 @@ public class PrimaryController  {
   @FXML private Spinner<Integer> fontSizeSpinner;
   @FXML private TextField charToExport, outputFileName;
   @FXML private VBox previewContainer;
+  @FXML private TextField searchTextField;
 
   List<String> fontList = new ArrayList<>();
   Font[] allFonts;
@@ -62,6 +63,27 @@ public class PrimaryController  {
     _setupListView();
     _setupFontSizeSpinner();
     _setupTextArea();
+    _setupSearch();
+  }
+
+  private void _setupSearch() {
+    searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if(newValue == null) return;
+
+      if(StringUtils.isBlank(newValue)) {
+        fontListView.setItems(FXCollections.observableList(fontList));
+        return;
+      }
+
+      List<String> filteredList = new ArrayList<>();
+      for(String fontName: fontList) {
+        if(fontName.toLowerCase().contains(newValue.toLowerCase())) {
+          filteredList.add(fontName);
+        }
+      }
+
+      fontListView.setItems(FXCollections.observableList(filteredList));
+    });
   }
 
   public void _setupFontSizeSpinner() {

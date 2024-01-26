@@ -21,15 +21,24 @@
          </VBox.margin></Label>
       <HBox spacing="10.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox spacing="10.0">
+            <VBox>
                <children>
+                  <HBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <Label text="Search" />
+                        <TextField fx:id="searchTextField" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <ListView fx:id="fontListView" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" VBox.vgrow="ALWAYS" />
                   <HBox>
                      <children>
-                        <Label text="Fonts available " />
+                        <Label text="Installed fonts " />
                         <Label fx:id="fontsNum" text="(*)" />
                      </children>
                   </HBox>
-                  <ListView fx:id="fontListView" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <VBox spacing="10.0" HBox.hgrow="ALWAYS">
@@ -57,7 +66,7 @@
                   </VBox>
                </children>
                <padding>
-                  <Insets top="25.0" />
+                  <Insets top="5.0" />
                </padding>
             </VBox>
          </children>
