@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainPane" alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.xster.controllers.PrimaryController">
+<VBox fx:id="mainPane" alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.xster.controllers.PrimaryController">
   <children>
    <Label text="TFT_eSPI Font Generator">
          <font>
@@ -58,7 +58,7 @@
                   <HBox alignment="CENTER_LEFT">
                      <children>
                         <Label prefWidth="110.0" text="Output file" />
-                        <TextField fx:id="outputFileName" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="outputFileName" HBox.hgrow="ALWAYS" text="output" />
                         <Label text=".h" />
                      </children>
                   </HBox>
