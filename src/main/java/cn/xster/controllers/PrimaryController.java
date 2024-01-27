@@ -154,6 +154,8 @@ public class PrimaryController  {
           StringUtils.isBlank(charToExport.getText()) ? "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.~!@#$%^&*()_+{}|:\"<>?": charToExport.getText(),
           a,
           StringUtils.isBlank(outputFileName.getText()) ? file.getAbsolutePath() + "\\output" : file.getAbsolutePath() + "\\" + outputFileName.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Export Done", ButtonType.OK);
+        alert.showAndWait();
     }
   }
 }
