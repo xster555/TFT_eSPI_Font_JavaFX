@@ -149,14 +149,26 @@ public class PrimaryController  {
     if (file != null) {
       FontCreator fontCreator = new FontCreator();
       int[] a = {};
+      String outputPath;
+      if(_isWindowsOS()) {
+        outputPath = StringUtils.isBlank(outputFileName.getText()) ? file.getAbsolutePath() + "\\output" : file.getAbsolutePath() + "\\" + outputFileName.getText();
+      } else {
+        outputPath = StringUtils.isBlank(outputFileName.getText()) ? file.getAbsolutePath() + "/output" : file.getAbsolutePath() + "/" + outputFileName.getText();
+      }
+
       fontCreator.getHFont(fontListView.getSelectionModel().getSelectedIndex(),
           fontSizeSpinner.getValue(),
           StringUtils.isBlank(charToExport.getText()) ? "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.~!@#$%^&*()_+{}|:\"<>?": charToExport.getText(),
           a,
-          StringUtils.isBlank(outputFileName.getText()) ? file.getAbsolutePath() + "\\output" : file.getAbsolutePath() + "\\" + outputFileName.getText());
+          outputPath);
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Export Done", ButtonType.OK);
         alert.showAndWait();
     }
+  }
+
+  private boolean _isWindowsOS() {
+    String os = System.getProperty("os.name");
+    return os.toLowerCase().contains("win");
   }
 }
 
