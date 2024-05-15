@@ -14,5 +14,5 @@
 ## 使用方法
 1. 从Release下载最新的jar包
 2. 请确保配置了Java21的环境
-3. 【Windows】打开cmd，找到jar包所在位置，运行 `java -jar TFT_eSPI_Font_with_GUI.jar`，
+3. 【Windows】打开cmd，找到jar包所在位置，运行 `java -jar TFT_eSPI_Font_JFX_1.0.jar`，
 4. 【MacOS】打开终端（terminal），找到jar包所在位置，运行 `java -jar TFT_eSPI_FONT_JFX_1.0.jar`
