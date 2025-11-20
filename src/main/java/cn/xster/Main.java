@@ -1,6 +1,5 @@
 package cn.xster;
 
-import cn.xster.App;
 import javafx.application.Application;
 
 /**
