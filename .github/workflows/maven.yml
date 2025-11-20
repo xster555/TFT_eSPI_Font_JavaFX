@@ -24,7 +24,7 @@ jobs:
       with:
         java-version: '21'
         cache: maven
-        distribution: ''
+        distribution: 'corretto'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
